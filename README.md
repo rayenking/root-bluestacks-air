@@ -17,7 +17,7 @@ Root BlueStacks Air macOS
 - Close BlueStacks Air
 - Download this repo and extract it
 - Copy Kitsune Mask to the project folder, and rename it to `magisk.apk`
-- Open Terminal.app or iTerm.app and navigate to the project folder
+- Open **Terminal.app** or **iTerm.app** and navigate to the project folder
   ```bash
   cd ~/Downloads/root-bluestacks-air
   ```
@@ -27,7 +27,7 @@ Root BlueStacks Air macOS
   ```
 - Wait until BlueStacks Air starts
 - Install Kitsune Mask (`magisk.apk`)
-- Open Kitsune Mask and proceed with additional setup. This will reboot BlueStacks Air and causing freeze.
+- Open Kitsune Mask and proceed with additional setup. This will reboot BlueStacks Air, causing it to crash.
 - Force quit BlueStacks Air
 - Execute `restore_initrd.sh` to relock the rootfs
   ```bash

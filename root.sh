@@ -46,13 +46,13 @@ cp magisk/assets/stub.apk $MAGISK_BIN_DIR/stub.apk
 
 rm -rf magisk
 
-[[ ! -d build ]] && mkdir build
-cd build
-
 echo '[*] Backing up rootfs'
 [[ ! -f $ROOTFS_BACKUP ]] && cp $ROOTFS_PATH $ROOTFS_BACKUP
 echo '[*] Backing up initrd'
 [[ ! -f $INITRD_BACKUP ]] && cp $INITRD_PATH $INITRD_BACKUP
+
+[[ ! -d build ]] && mkdir build
+cd build
 
 echo '[*] Patching initrd'
 [[ -d initrd ]] && rm -rf initrd
@@ -75,13 +75,11 @@ if [ -f /boot/magisk-bin.zip ]; then
   log_echo "Installing Magisk"
   unzip -q /boot/magisk-bin.zip -d /system/etc/init/magisk
   chmod 700 /system/etc/init/magisk/*
-  cp /system/etc/init/bootanim.rc{,.bak}
   cat /boot/magisk.rc >> /system/etc/init/bootanim.rc
 fi
 
 exec /init
 EOF
-
 
 echo '[*] Repacking initrd'
 find . | cpio -H newc -o | gzip > $INITRD_PATH
@@ -94,9 +92,10 @@ rm -rf $MAGISK_BIN_DIR
 
 echo '[*] Starting BlueStacks'
 open -n $BLUESTACKS
-
 echo '[*] Done'
+echo ''
 echo '=================================================='
+echo ''
 echo 'Next steps:'
 echo '* Install magisk.apk'
 echo '* Open Kitsune Mask app and proceed with additional setup'

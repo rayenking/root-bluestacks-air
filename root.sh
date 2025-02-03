@@ -11,8 +11,8 @@ INITRD_PATH=$BLUESTACKS/Contents/img/initrd_hvf.img
 INITRD_BACKUP=$INITRD_PATH.bak
 
 if [ -d "$BLUESTACKS" ]; then
-  BS_VERSION_FILE=$(find "$BLUESTACKS" -maxdepth 1 -type f -name '[0-9].*')
-  BS_VERSION=${BS_VERSION_FILE##*/}
+  PLIST_FILE=$BLUESTACKS/Contents/Info.plist
+  BS_VERSION=$(defaults read $PLIST_FILE CFBundleShortVersionString 2>/dev/null)
   echo "[*] Found BlueStacks Air version $BS_VERSION"
 else
   echo "[!] BlueStacks not found"

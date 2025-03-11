@@ -30,6 +30,8 @@ echo '* You have started BlueStacks for the first time.'
 echo '* BlueStacks is closed before proceeding.'
 echo ''
 
+read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 0
+
 echo '[*] Preparing magisk'
 [[ -d magisk ]] && rm -rf magisk
 unzip -q magisk.apk -d magisk
@@ -99,5 +101,5 @@ echo ''
 echo 'Next steps:'
 echo '* Install magisk.apk'
 echo '* Open Kitsune Mask app and proceed with additional setup'
-echo '* Force quit BlueStacks'
+echo '* Quit BlueStacks'
 echo '* Execute restore_initrd.sh'

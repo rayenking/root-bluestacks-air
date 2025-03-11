@@ -18,7 +18,7 @@ Tested on BlueStacks Air
 
 ## Rooting
 - Install BlueStacks Air
-- **!! REQUIRED !!** Open BlueStacks Air for the first time
+- ‼️ **REQUIRED** ‼️ Open BlueStacks Air for the first time
 - Close BlueStacks Air
 - Download this repo and extract it
 - Copy Kitsune Mask to the project folder, and rename it to `magisk.apk`
@@ -26,7 +26,7 @@ Tested on BlueStacks Air
   ```bash
   cd ~/Downloads/root-bluestacks-air
   ```
-- Execute `root.sh`
+- Execute `root.sh` with sudo
   ```bash
   sudo bash root.sh
   ```
@@ -34,7 +34,7 @@ Tested on BlueStacks Air
 - Install Kitsune Mask (`magisk.apk`)
 - Open Kitsune Mask and proceed with additional setup. This will reboot BlueStacks Air, ~~causing it to crash~~.
 - Force quit BlueStacks Air (unnecessary in the latest version of BlueStacks Air)
-- Execute `restore_initrd.sh` to relock the rootfs
+- Execute `restore_initrd.sh` with sudo to relock the rootfs
   ```bash
   sudo bash restore_initrd.sh
   ```
@@ -45,7 +45,7 @@ Tested on BlueStacks Air
 
 ## Unrooting
 - Make sure BlueStacks Air is closed
-- Execute `unroot.sh`
+- Execute `unroot.sh` with sudo
   ```bash
   sudo bash unroot.sh
   ```

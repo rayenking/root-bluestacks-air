@@ -34,8 +34,7 @@ Tested on BlueStacks Air
 - Wait until BlueStacks Air starts
 - Install Kitsune Mask (`magisk.apk`)
 - Open Kitsune Mask and press **OK** when the **Requires Additional Setup** prompt appears. This will reboot BlueStacks Air.
-![magisk-additional-setup](magisk-additional-setup.png)
-
+  ![magisk-additional-setup](magisk-additional-setup.png)
 - Force quit BlueStacks Air if necessary
 - Open BlueStacks Air and enjoy
 - If you need **Zygisk**, enable it from Kitsune Mask settings and reboot BlueStacks Air

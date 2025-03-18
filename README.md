@@ -4,6 +4,7 @@ Root BlueStacks Air macOS
 Tested on BlueStacks Air
 - 5.21.680.7532
 - 5.21.695.7506
+- 5.21.700.7523
 
 
 ![Screenshot](bluestacks-air-root-magisk.png)
@@ -32,12 +33,10 @@ Tested on BlueStacks Air
   ```
 - Wait until BlueStacks Air starts
 - Install Kitsune Mask (`magisk.apk`)
-- Open Kitsune Mask and proceed with additional setup. This will reboot BlueStacks Air, ~~causing it to crash~~.
-- Force quit BlueStacks Air (unnecessary in the latest version of BlueStacks Air)
-- Execute `restore_initrd.sh` with sudo to relock the rootfs
-  ```bash
-  sudo bash restore_initrd.sh
-  ```
+- Open Kitsune Mask and press **OK** when the **Requires Additional Setup** prompt appears. This will reboot BlueStacks Air.
+![magisk-additional-setup](magisk-additional-setup.png)
+
+- Force quit BlueStacks Air if necessary
 - Open BlueStacks Air and enjoy
 - If you need **Zygisk**, enable it from Kitsune Mask settings and reboot BlueStacks Air
 

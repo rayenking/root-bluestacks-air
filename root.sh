@@ -60,25 +60,20 @@ echo '[*] Patching initrd'
 [[ -d initrd ]] && rm -rf initrd
 mkdir initrd
 cd initrd
-cat $INITRD_BACKUP | cpio -i
-zip -qj boot/magisk-bin.zip $MAGISK_BIN_DIR/*
+cat $INITRD_BACKUP | cpio -id
+cp -r $MAGISK_BIN_DIR boot/magisk
+chmod 700 boot/magisk/*
 cp $BASE_DIR/magisk.rc boot/magisk.rc
 if [ -f $MAGISK_BIN_DIR/magisk32 ]; then
   sed -i '' -e 's/magisk64/magisk32/g' boot/magisk.rc
 fi
 
-# Mount filesystem as rw
-sed -i '' -e 's/mount -o ro/mount -o rw/g' boot/init
-
 # Install magisk to system
 sed -i '' -e 's/exec \/init//' boot/stage2.sh
 cat << EOF >> boot/stage2.sh
-if [ -f /boot/magisk-bin.zip ]; then
-  log_echo "Installing Magisk"
-  unzip -q /boot/magisk-bin.zip -d /system/etc/init/magisk
-  chmod 700 /system/etc/init/magisk/*
-  cat /boot/magisk.rc >> /system/etc/init/bootanim.rc
-fi
+log_echo "Installing magisk.rc"
+cat /boot/magisk.rc >> /init.bst.rc
+die_if_error "Cannot install magisk.rc"
 
 exec /init
 EOF
@@ -102,4 +97,3 @@ echo 'Next steps:'
 echo '* Install magisk.apk'
 echo '* Open Kitsune Mask app and proceed with additional setup'
 echo '* Quit BlueStacks'
-echo '* Execute restore_initrd.sh'

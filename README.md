@@ -13,7 +13,7 @@ Tested on BlueStacks Air
 
 ## Requirements
 - [BlueStacks Air](https://www.bluestacks.com/mac)
-- [Kitsune Mask](https://huskydg.github.io/magisk-files/)
+- [Kitsune Mask](https://github.com/HuskyDG/magisk-files/releases)
 
 
 

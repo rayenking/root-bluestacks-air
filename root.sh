@@ -34,12 +34,12 @@ read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][e
 
 echo '[*] Preparing magisk'
 [[ -d magisk ]] && rm -rf magisk
-unzip -q magisk.apk -d magisk
+unzip -oq magisk.apk -d magisk
 
 [[ -d $MAGISK_BIN_DIR ]] && rm -rf $MAGISK_BIN_DIR
 mkdir $MAGISK_BIN_DIR
 
-BIN_NAMES=("magisk32" "magisk64" "magiskinit" "magiskpolicy")
+BIN_NAMES=("magisk64" "magiskinit" "magiskpolicy")
 for BIN_NAME in ${BIN_NAMES[@]}; do
   SRC=magisk/lib/$ARCH/lib$BIN_NAME.so
   [[ -f $SRC ]] && cp $SRC $MAGISK_BIN_DIR/$BIN_NAME

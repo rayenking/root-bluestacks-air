@@ -3,17 +3,43 @@
 BLUESTACKS=/Applications/BlueStacks.app
 ADB_PORT=5555
 ARCH=arm64-v8a
-BASE_DIR=$(pwd)
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 MAGISK_BIN_DIR=$BASE_DIR/magisk-bin
-ROOTFS_PATH=$BLUESTACKS/Contents/img/Root.qcow2
-ROOTFS_BACKUP=$ROOTFS_PATH.bak
 INITRD_PATH=$BLUESTACKS/Contents/img/initrd_hvf.img
 INITRD_BACKUP=$INITRD_PATH.bak
+INITRD_OUTPUT=$INITRD_PATH
+INPLACE=1
+
+abspath() {
+  if  [[ $1 == /* ]]; then
+    echo $1
+  else
+    echo $(pwd)/$1
+  fi
+}
+
+while getopts "h?b:o:" opt; do
+    case "$opt" in
+    h|\?)
+        echo "Usage: $0 [-o initrd_output_path] [-b backup_dir]"
+        exit 0
+        ;;
+    o)  INITRD_OUTPUT=$( abspath ${OPTARG} )
+        mkdir -p $( dirname $INITRD_OUTPUT )
+        INPLACE=0
+        ;;
+    b)  BACKUP_DIR=$( abspath ${OPTARG} )
+        mkdir -p $BACKUP_DIR
+        INITRD_BACKUP=$BACKUP_DIR/initrd_hvf.img
+        ;;
+    esac
+done
 
 if [ -d "$BLUESTACKS" ]; then
   PLIST_FILE=$BLUESTACKS/Contents/Info.plist
   BS_VERSION=$(defaults read $PLIST_FILE CFBundleShortVersionString 2>/dev/null)
   echo "[*] Found BlueStacks Air version $BS_VERSION"
+  echo ''
 else
   echo "[!] BlueStacks not found"
   exit 1
@@ -25,12 +51,16 @@ echo '**        BlueStacks Air Magisk Installer       **'
 echo '**                                              **'
 echo '=================================================='
 echo ''
-echo 'Checklist:'
-echo '* You have started BlueStacks for the first time.'
-echo '* BlueStacks is closed before proceeding.'
-echo ''
 
-read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 0
+if [ $INPLACE -eq 1 ]; then
+  pkill -x BlueStacks
+  echo 'Checklist:'
+  echo '* You have started BlueStacks for the first time.'
+  echo '* BlueStacks is closed before proceeding.'
+  echo ''
+fi
+
+read -p "Continue? (y/n): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 0
 
 echo '[*] Preparing magisk'
 [[ -d magisk ]] && rm -rf magisk
@@ -48,9 +78,7 @@ cp magisk/assets/stub.apk $MAGISK_BIN_DIR/stub.apk
 
 rm -rf magisk
 
-echo '[*] Backing up rootfs'
-[[ ! -f $ROOTFS_BACKUP ]] && cp $ROOTFS_PATH $ROOTFS_BACKUP
-echo '[*] Backing up initrd'
+echo "[*] Backing up initrd to $INITRD_BACKUP"
 [[ ! -f $INITRD_BACKUP ]] && cp $INITRD_PATH $INITRD_BACKUP
 
 [[ ! -d build ]] && mkdir build
@@ -60,7 +88,7 @@ echo '[*] Patching initrd'
 [[ -d initrd ]] && rm -rf initrd
 mkdir initrd
 cd initrd
-cat $INITRD_BACKUP | cpio -id
+cat ${INITRD_BACKUP:-INITRD_PATH} | cpio -id
 cp -r $MAGISK_BIN_DIR boot/magisk
 chmod 700 boot/magisk/*
 cp $BASE_DIR/magisk.rc boot/magisk.rc
@@ -78,8 +106,8 @@ die_if_error "Cannot install magisk.rc"
 exec /init
 EOF
 
-echo '[*] Repacking initrd'
-find . | cpio -H newc -o | gzip > $INITRD_PATH
+echo "[*] Repacking initrd to $INITRD_OUTPUT"
+find . | cpio -H newc -o | gzip > $INITRD_OUTPUT
 
 cd $BASE_DIR
 
@@ -87,13 +115,26 @@ cd $BASE_DIR
 rm -rf build
 rm -rf $MAGISK_BIN_DIR
 
-echo '[*] Starting BlueStacks'
-open -n $BLUESTACKS
-echo '[*] Done'
-echo ''
-echo '=================================================='
-echo ''
-echo 'Next steps:'
-echo '* Install magisk.apk'
-echo '* Open Kitsune Mask app and proceed with additional setup'
-echo '* Quit BlueStacks'
+if [ $INPLACE -eq 1 ]; then
+  echo '[*] Starting BlueStacks'
+  open -n $BLUESTACKS
+  echo '[*] Done'
+  echo ''
+  echo '=================================================='
+  echo ''
+  echo 'Next steps:'
+  echo '* Install magisk.apk'
+  echo '* Open Kitsune Mask app and proceed with additional setup'
+  echo '* Quit BlueStacks'
+else
+  echo '[*] Done'
+  echo ''
+  echo '=================================================='
+  echo ''
+  echo 'Next steps:'
+  echo "* Copy $INITRD_OUTPUT to $INITRD_PATH"
+  echo '* Open BlueStacks'
+  echo '* Install magisk.apk'
+  echo '* Open Kitsune Mask app and proceed with additional setup'
+  echo '* Quit BlueStacks'
+fi

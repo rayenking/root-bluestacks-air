@@ -21,8 +21,6 @@ Tested on BlueStacks Air
 
 ## Rooting
 
-> **Note:** Rooting may fail on mac with System Integrity Protection (SIP) enabled. Ask Google about [*How to disable SIP*](https://www.google.com/search?q=how+to+disable+sip) and Gemini will show you how to do it.
-
 - Install BlueStacks Air
 - ‼️ **REQUIRED** ‼️ Open BlueStacks Air for the first time
 - Close BlueStacks Air
@@ -32,11 +30,30 @@ Tested on BlueStacks Air
   ```bash
   cd ~/Downloads/root-bluestacks-air
   ```
+
+
+### Method 1: SIP enabled
+
+- Execute `root.sh` with initrd output path and backup directory options
+  ```bash
+  bash root.sh -o files/initrd_hvf.img -b files/backup
+  ```
+  the above command will backup the original `initrd_hvf.img` in `files/backup` and create a patched one in `files/initrd_hvf.img`, you may specify a different paths for the output and backup directory
+- Copy the patched `initrd_hvf.img` to the `/Applications/BlueStacks.app/Contents/img/` and replace the original `initrd_hvf.img`
+- Start BlueStacks Air
+
+
+### Method 2: SIP disabled
+
 - Execute `root.sh` with sudo
   ```bash
   sudo bash root.sh
   ```
 - Wait until BlueStacks Air starts
+
+
+### Next Steps
+
 - Install Kitsune Mask (`magisk.apk`)
 - Open Kitsune Mask and press **OK** when the **Requires Additional Setup** prompt appears. This will reboot BlueStacks Air.
   ![magisk-additional-setup](magisk-additional-setup.png)
@@ -47,6 +64,13 @@ Tested on BlueStacks Air
 
 
 ## Unrooting
+
+### Method 1: SIP enabled
+
+- Copy the backup `initrd_hvf.img` to `/Applications/BlueStacks.app/Contents/img/`
+- Done
+
+### Method 2: SIP disabled
 - Make sure BlueStacks Air is closed
 - Execute `unroot.sh` with sudo
   ```bash

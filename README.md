@@ -34,13 +34,14 @@ Tested on BlueStacks Air
 
 ### Method 1: SIP enabled
 
-- Execute `root.sh` with initrd output path and backup directory options
+- Execute `root.sh` specifying initrd output path and backup directory
   ```bash
   bash root.sh -o files/initrd_hvf.img -b files/backup
   ```
-  the above command will backup the original `initrd_hvf.img` in `files/backup` and create a patched one in `files/initrd_hvf.img`, you may specify a different paths for the output and backup directory
-- Copy the patched `initrd_hvf.img` to the `/Applications/BlueStacks.app/Contents/img/` and replace the original `initrd_hvf.img`
+  the above command will backup the original `initrd_hvf.img` in `files/backup` and create a patched one in `files/initrd_hvf.img`, you may specify a different path for the output and backup directory
+- Copy the patched `initrd_hvf.img` to `/Applications/BlueStacks.app/Contents/img/` and replace the original one
 - Start BlueStacks Air
+- Continue with [Next Steps](#next-steps)
 
 
 ### Method 2: SIP disabled
@@ -50,6 +51,7 @@ Tested on BlueStacks Air
   sudo bash root.sh
   ```
 - Wait until BlueStacks Air starts
+- Continue with [Next Steps](#next-steps)
 
 
 ### Next Steps

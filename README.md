@@ -6,6 +6,7 @@ Tested on BlueStacks Air
 - 5.21.695.7506
 - 5.21.700.7523
 - 5.21.705.7515
+- 5.21.712.7503
 
 
 ![Screenshot](bluestacks-air-root-magisk.png)

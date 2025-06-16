@@ -8,8 +8,9 @@
 - 5.21.705.7515
 - 5.21.712.7503
 - 5.21.715.7538
+- 5.21.720.7530
 
-![Screenshot](bluestacks-air-root-magisk.png)
+![Screenshot](/images/bluestacks-air-root-magisk.png)
 
 ## Requirements
 
@@ -58,7 +59,7 @@
 
 - Install Kitsune Mask (`magisk.apk`)
 - Open Kitsune Mask and press **OK** when the **Requires Additional Setup** prompt appears. This will reboot BlueStacks Air.
-  ![magisk-additional-setup](magisk-additional-setup.png)
+  ![magisk-additional-setup](/images/magisk-additional-setup.png)
 - Force quit BlueStacks Air if necessary
 - Open BlueStacks Air and enjoy
 - If you need **Zygisk**, enable it from Kitsune Mask settings and reboot BlueStacks Air
